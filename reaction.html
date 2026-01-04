@@ -457,7 +457,10 @@ body {
   <!-- Game Area -->
   <div id="gameArea" class="game-area card">
     <div class="game-message" id="gameMessage">Ready to Test Your Reflexes?</div>
-    <div class="game-instruction" id="gameInstruction">Click anywhere to start!</div>
+  <div class="game-instruction" id="gameInstruction">
+  Click anywhere or press ANY key to start!
+</div>
+
     <div id="resultDisplay" class="hidden"></div>
   </div>
 
@@ -519,6 +522,11 @@ const secretBtn = document.getElementById('secretBtn');
 const codeDisplay = document.getElementById('codeDisplay');
 
 gameArea.addEventListener('click', handleClick);
+document.addEventListener('keydown', (e) => {
+  // Prevent holding a key from triggering multiple times
+  if (e.repeat) return;
+  handleClick();
+});
 
 function handleClick() {
   if (gameState === 'idle') {
@@ -537,7 +545,7 @@ function startGame() {
   gameArea.classList.add('wait');
   gameArea.classList.remove('ready');
   gameMessage.textContent = 'Wait for green...';
-  gameInstruction.textContent = "Don't click yet!";
+  gameInstruction.textContent = "Don't click or press any key yet!";
   resultDisplay.classList.add('hidden');
   
   const delay = Math.random() * 3000 + 2000;
