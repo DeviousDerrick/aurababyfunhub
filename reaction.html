@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Aurababy Reaction Test</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --purple-deep: #1a0d2e;
+  --purple-mid: #2d1b4e;
+  --purple-bright: #7b2cbf;
+  --blue-bright: #00b4d8;
+  --pink-neon: #f72585;
+  --white: #ffffff;
+  --green-neon: #00ff88;
+  --gold: #ffd700;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(125deg, #1a0d2e 0%, #2d1b4e 25%, #3e1f5c 50%, #2d1b4e 75%, #1a0d2e 100%);
+  background-size: 400% 400%;
+  animation: gradientFlow 20s ease infinite;
+  position: relative;
+}
+
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Animated background orbs */
+.orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orb1 {
+  width: 500px;
+  height: 500px;
+  background: var(--purple-bright);
+  top: -250px;
+  left: -250px;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb2 {
+  width: 400px;
+  height: 400px;
+  background: var(--blue-bright);
+  bottom: -200px;
+  right: -200px;
+  animation: float 30s ease-in-out infinite reverse;
+}
+
+.orb3 {
+  width: 350px;
+  height: 350px;
+  background: var(--pink-neon);
+  top: 50%;
+  left: 50%;
+  animation: float 35s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(100px, -100px) scale(1.1); }
+  66% { transform: translate(-100px, 100px) scale(0.9); }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  font-size: 3em;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--white), var(--blue-bright), var(--pink-neon));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(255,255,255,0.3);
+  animation: titleGlow 3s ease-in-out infinite;
+  letter-spacing: 2px;
+}
+
+@keyframes titleGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(123,44,191,0.5)); }
+  50% { filter: drop-shadow(0 0 40px rgba(247,37,133,0.8)); }
+}
+
+/* Card styling */
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--purple-bright), var(--blue-bright), var(--pink-neon));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+/* Secret Code Button */
+.secret-btn {
+  background: linear-gradient(135deg, #ffd700, #ff8c00);
+  border: 3px solid rgba(255,215,0,0.5);
+  border-radius: 16px;
+  padding: 20px 40px;
+  font-size: 1.3em;
+  font-weight: 800;
+  color: var(--purple-deep);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 30px rgba(255,215,0,0.4);
+  animation: secretGlow 2s ease-in-out infinite;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.secret-btn:hover {
+  transform: scale(1.1) rotate(-2deg);
+  box-shadow: 0 0 50px rgba(255,215,0,0.8);
+}
+
+.secret-btn.locked {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.4);
+  cursor: not-allowed;
+  animation: none;
+  box-shadow: none;
+}
+
+@keyframes secretGlow {
+  0%, 100% { box-shadow: 0 0 30px rgba(255,215,0,0.4); }
+  50% { box-shadow: 0 0 50px rgba(255,215,0,0.7); }
+}
+
+.code-display {
+  background: rgba(255,215,0,0.1);
+  border: 3px solid var(--gold);
+  border-radius: 16px;
+  padding: 30px;
+  margin-top: 20px;
+  text-align: center;
+  animation: codeReveal 0.5s ease;
+}
+
+@keyframes codeReveal {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.code-text {
+  font-size: 2em;
+  font-weight: 800;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255,215,0,0.8);
+  letter-spacing: 3px;
+}
+
+/* Game Area */
+.game-area {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.game-area.wait {
+  background: rgba(220,53,69,0.2);
+  border-color: rgba(220,53,69,0.5);
+}
+
+.game-area.ready {
+  background: rgba(0,255,136,0.2);
+  border-color: rgba(0,255,136,0.5);
+  animation: readyPulse 0.5s ease infinite;
+}
+
+@keyframes readyPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(0,255,136,0.4); }
+  50% { box-shadow: 0 0 60px rgba(0,255,136,0.7); }
+}
+
+.game-message {
+  font-size: 2em;
+  font-weight: 800;
+  text-shadow: 0 0 20px rgba(255,255,255,0.8);
+  margin-bottom: 20px;
+}
+
+.game-instruction {
+  font-size: 1.2em;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.result-display {
+  font-size: 4em;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--green-neon), var(--blue-bright));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(0,255,136,0.5);
+  margin: 20px 0;
+  animation: resultPop 0.5s ease;
+}
+
+@keyframes resultPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.ultra-fast {
+  background: linear-gradient(135deg, var(--gold), #ff8c00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ultraFastGlow 1s ease infinite;
+}
+
+@keyframes ultraFastGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.8)); }
+  50% { filter: drop-shadow(0 0 40px rgba(255,140,0,1)); }
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-box {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.3);
+  box-shadow: 0 0 30px rgba(123,44,191,0.4);
+}
+
+.stat-value {
+  font-size: 2.5em;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--blue-bright), var(--pink-neon));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255,255,255,0.5);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.stat-label {
+  font-size: 0.9em;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+/* History */
+.history-container {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.history-item {
+  background: rgba(255,255,255,0.05);
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.history-item:hover {
+  background: rgba(255,255,255,0.1);
+  transform: translateX(5px);
+}
+
+.history-time {
+  font-size: 1.3em;
+  font-weight: 800;
+}
+
+.history-badge {
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.badge-ultra {
+  background: linear-gradient(135deg, var(--gold), #ff8c00);
+  color: var(--purple-deep);
+  box-shadow: 0 0 15px rgba(255,215,0,0.5);
+}
+
+.badge-fast {
+  background: linear-gradient(135deg, var(--green-neon), var(--blue-bright));
+  color: var(--purple-deep);
+}
+
+.badge-normal {
+  background: rgba(255,255,255,0.2);
+}
+
+/* Buttons */
+.btn {
+  background: linear-gradient(135deg, var(--purple-bright), var(--pink-neon));
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--white);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(123,44,191,0.4);
+  margin: 10px;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(247,37,133,0.6);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--purple-bright), var(--pink-neon));
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header h1 { font-size: 2em; }
+  .result-display { font-size: 2.5em; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .code-text { font-size: 1.5em; }
+}
+</style>
+</head>
+
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+  <div class="header">
+    <h1>⚡ AURABABY REACTION TEST ⚡</h1>
+  </div>
+
+  <!-- Secret Code Section -->
+  <div class="card" style="text-align: center;">
+    <h2 style="font-size: 1.8em; margin-bottom: 15px;">🏆 Ultra Speed Achievement 🏆</h2>
+    <p style="opacity: 0.9; margin-bottom: 20px;">React under 180ms to unlock the secret code!</p>
+    <button id="secretBtn" class="secret-btn locked" disabled>
+      🔒 Level System Code
+    </button>
+    <div id="codeDisplay" class="code-display hidden">
+      <p style="font-size: 1.2em; margin-bottom: 10px; opacity: 0.9;">🎉 Code Unlocked! 🎉</p>
+      <div class="code-text">Thefastestbehbehalive901</div>
+    </div>
+  </div>
+
+  <!-- Game Area -->
+  <div id="gameArea" class="game-area card">
+    <div class="game-message" id="gameMessage">Ready to Test Your Reflexes?</div>
+    <div class="game-instruction" id="gameInstruction">Click anywhere to start!</div>
+    <div id="resultDisplay" class="hidden"></div>
+  </div>
+
+  <!-- Stats -->
+  <div class="card">
+    <h2 style="font-size: 1.8em; margin-bottom: 25px; text-align: center;">📊 Your Statistics</h2>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <span class="stat-value" id="avgTotal">--</span>
+        <span class="stat-label">Overall Avg</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value" id="avgLast5">--</span>
+        <span class="stat-label">Last 5 Avg</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value" id="bestTime">--</span>
+        <span class="stat-label">Best Time</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value" id="totalAttempts">0</span>
+        <span class="stat-label">Total Tests</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value" id="ultraCount">0</span>
+        <span class="stat-label">Ultra Fast (<180ms)</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-value" id="fastCount">0</span>
+        <span class="stat-label">Fast (<250ms)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="card">
+    <h2 style="font-size: 1.8em; margin-bottom: 20px; text-align: center;">📜 Recent Attempts</h2>
+    <div class="history-container" id="historyContainer">
+      <p style="text-align: center; opacity: 0.6;">No attempts yet. Start testing!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+let gameState = 'idle';
+let startTime;
+let timeout;
+const reactions = [];
+let bestReaction = Infinity;
+let secretUnlocked = false;
+let ultraFastCount = 0;
+let fastCount = 0;
+
+const gameArea = document.getElementById('gameArea');
+const gameMessage = document.getElementById('gameMessage');
+const gameInstruction = document.getElementById('gameInstruction');
+const resultDisplay = document.getElementById('resultDisplay');
+const secretBtn = document.getElementById('secretBtn');
+const codeDisplay = document.getElementById('codeDisplay');
+
+gameArea.addEventListener('click', handleClick);
+
+function handleClick() {
+  if (gameState === 'idle') {
+    startGame();
+  } else if (gameState === 'wait') {
+    tooEarly();
+  } else if (gameState === 'ready') {
+    recordReaction();
+  } else if (gameState === 'result') {
+    resetGame();
+  }
+}
+
+function startGame() {
+  gameState = 'wait';
+  gameArea.classList.add('wait');
+  gameArea.classList.remove('ready');
+  gameMessage.textContent = 'Wait for green...';
+  gameInstruction.textContent = "Don't click yet!";
+  resultDisplay.classList.add('hidden');
+  
+  const delay = Math.random() * 3000 + 2000;
+  timeout = setTimeout(showReady, delay);
+}
+
+function showReady() {
+  gameState = 'ready';
+  gameArea.classList.remove('wait');
+  gameArea.classList.add('ready');
+  gameMessage.textContent = 'CLICK NOW!';
+  gameInstruction.textContent = 'Go go go!';
+  startTime = Date.now();
+}
+
+function tooEarly() {
+  clearTimeout(timeout);
+  gameState = 'result';
+  gameArea.classList.remove('wait', 'ready');
+  gameMessage.textContent = '❌ Too Early!';
+  gameInstruction.textContent = 'Click to try again';
+  resultDisplay.classList.add('hidden');
+}
+
+function recordReaction() {
+  const reactionTime = Date.now() - startTime;
+  gameState = 'result';
+  gameArea.classList.remove('wait', 'ready');
+  
+  reactions.push(reactionTime);
+  if (reactionTime < bestReaction) {
+    bestReaction = reactionTime;
+  }
+  
+  // Check for ultra fast
+  if (reactionTime < 180) {
+    ultraFastCount++;
+    if (!secretUnlocked) {
+      unlockSecret();
+    }
+  }
+  
+  if (reactionTime < 250) {
+    fastCount++;
+  }
+  
+  displayResult(reactionTime);
+  updateStats();
+  addToHistory(reactionTime);
+}
+
+function displayResult(time) {
+  resultDisplay.classList.remove('hidden');
+  resultDisplay.textContent = time + 'ms';
+  
+  let message = '';
+  let instruction = '';
+  
+  if (time < 180) {
+    resultDisplay.classList.add('ultra-fast');
+    message = '🌟 ULTRA FAST! 🌟';
+    instruction = 'You\'re lightning fast! 🔥';
+  } else if (time < 250) {
+    resultDisplay.className = 'result-display';
+    message = '⚡ Amazing Speed!';
+    instruction = 'Incredible reflexes!';
+  } else if (time < 350) {
+    resultDisplay.className = 'result-display';
+    message = '👍 Pretty Good!';
+    instruction = 'Nice reaction time!';
+  } else {
+    resultDisplay.className = 'result-display';
+    message = '🎯 Good Try!';
+    instruction = 'Keep practicing!';
+  }
+  
+  gameMessage.textContent = message;
+  gameInstruction.textContent = instruction + ' Click to try again';
+}
+
+function resetGame() {
+  gameState = 'idle';
+  gameArea.classList.remove('wait', 'ready');
+  gameMessage.textContent = 'Ready for Another Round?';
+  gameInstruction.textContent = 'Click to start!';
+  resultDisplay.classList.add('hidden');
+  resultDisplay.classList.remove('ultra-fast');
+}
+
+function unlockSecret() {
+  secretUnlocked = true;
+  secretBtn.classList.remove('locked');
+  secretBtn.disabled = false;
+  secretBtn.textContent = '🔓 Level System Code';
+  
+  secretBtn.addEventListener('click', () => {
+    codeDisplay.classList.toggle('hidden');
+  });
+}
+
+function updateStats() {
+  // Total attempts
+  document.getElementById('totalAttempts').textContent = reactions.length;
+  
+  // Overall average
+  const avgTotal = reactions.reduce((a, b) => a + b, 0) / reactions.length;
+  document.getElementById('avgTotal').textContent = Math.round(avgTotal) + 'ms';
+  
+  // Last 5 average
+  const last5 = reactions.slice(-5);
+  const avgLast5 = last5.reduce((a, b) => a + b, 0) / last5.length;
+  document.getElementById('avgLast5').textContent = Math.round(avgLast5) + 'ms';
+  
+  // Best time
+  document.getElementById('bestTime').textContent = bestReaction + 'ms';
+  
+  // Counts
+  document.getElementById('ultraCount').textContent = ultraFastCount;
+  document.getElementById('fastCount').textContent = fastCount;
+}
+
+function addToHistory(time) {
+  const container = document.getElementById('historyContainer');
+  
+  if (reactions.length === 1) {
+    container.innerHTML = '';
+  }
+  
+  const item = document.createElement('div');
+  item.className = 'history-item';
+  
+  const timeSpan = document.createElement('span');
+  timeSpan.className = 'history-time';
+  timeSpan.textContent = time + 'ms';
+  
+  const badge = document.createElement('span');
+  badge.className = 'history-badge';
+  
+  if (time < 180) {
+    badge.classList.add('badge-ultra');
+    badge.textContent = '🌟 ULTRA FAST';
+  } else if (time < 250) {
+    badge.classList.add('badge-fast');
+    badge.textContent = '⚡ FAST';
+  } else {
+    badge.classList.add('badge-normal');
+    badge.textContent = '✓ GOOD';
+  }
+  
+  item.appendChild(timeSpan);
+  item.appendChild(badge);
+  
+  container.insertBefore(item, container.firstChild);
+  
+  // Keep only last 10
+  while (container.children.length > 10) {
+    container.removeChild(container.lastChild);
+  }
+}
+</script>
+</body>
+</html>
