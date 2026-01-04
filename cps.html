@@ -1,1 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Aurababy CPS Dashboard</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
 
+<style>
+:root {
+  --purple-deep:#1a0d2e;
+  --purple-mid:#2d1b4e;
+  --purple-bright:#7b2cbf;
+  --blue-bright:#00b4d8;
+  --pink-neon:#f72585;
+  --white:#ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{
+  height:100%;
+  font-family:Poppins,sans-serif;
+  font-weight:800;
+  color:var(--white);
+}
+body{
+  background:linear-gradient(125deg,#1a0d2e,#2d1b4e,#3e1f5c,#2d1b4e,#1a0d2e);
+  background-size:400% 400%;
+  animation:gradientFlow 20s ease infinite;
+}
+@keyframes gradientFlow{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+.orb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.3;z-index:0}
+.orb1{width:500px;height:500px;background:var(--purple-bright);top:-250px;left:-250px}
+.orb2{width:400px;height:400px;background:var(--blue-bright);bottom:-200px;right:-200px}
+.orb3{width:350px;height:350px;background:var(--pink-neon);top:50%;left:50%}
+
+.container{
+  position:relative;
+  z-index:1;
+  max-width:1400px;
+  margin:auto;
+  padding:40px 20px 140px;
+}
+.header{text-align:center;margin-bottom:20px}
+.header h1{
+  font-size:3em;
+  background:linear-gradient(135deg,var(--white),var(--blue-bright),var(--pink-neon));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+#rewardTop{
+  text-align:center;
+  font-size:2.5em;
+  margin-bottom:30px;
+  color:var(--white);
+  background:linear-gradient(135deg,var(--white),var(--blue-bright),var(--pink-neon));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* TIMER BUTTONS */
+.timer-buttons{
+  text-align:center;
+  margin-bottom:30px;
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  flex-wrap:wrap;
+}
+.timer-buttons button{
+  padding:10px 20px;
+  font-weight:800;
+  border-radius:20px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#7b2cbf,#f72585);
+  color:white;
+  border:none;
+  transition:0.3s;
+}
+.timer-buttons button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 30px rgba(247,37,133,0.7);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
+}
+
+.card{
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(20px);
+  border:2px solid rgba(255,255,255,.1);
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+}
+.card-title{
+  font-size:1.4em;
+  margin-bottom:20px;
+  display:flex;
+  gap:10px;
+}
+
+.cps-bar{
+  width:100%;
+  height:80px;
+  border:4px solid white;
+  border-radius:14px;
+  overflow:hidden;
+}
+.cps-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--purple-bright),var(--blue-bright),var(--pink-neon));
+  transition:width .2s;
+}
+
+.big{
+  font-size:3em;
+  text-align:center;
+  margin-top:15px;
+}
+
+.full{
+  grid-column:1/-1;
+  text-align:center;
+}
+
+#clickBox{
+  margin:40px auto 0;
+  width:90%;
+  max-width:800px;
+  height:200px;
+  background:rgba(255,255,255,0.05);
+  border:2px solid rgba(255,255,255,0.2);
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2em;
+  color:var(--white);
+  cursor:pointer;
+  user-select:none;
+  box-shadow:0 0 20px rgba(255,255,255,0.2);
+  transition:0.3s;
+}
+#clickBox:hover{
+  transform:scale(1.02);
+  box-shadow:0 0 30px rgba(255,255,255,0.4);
+}
+
+/* REWARD BUTTON BOTTOM */
+#rewardButtonContainer{
+  margin:40px auto 0;
+  text-align:center;
+  display:none;
+}
+#rewardButton{
+  font-size:2.5em;
+  padding:25px 50px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#7b2cbf,#f72585);
+  color:white;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 0 40px rgba(255,255,255,0.4);
+  transition:0.3s;
+}
+#rewardButton:hover{
+  transform:scale(1.08);
+  box-shadow:0 0 60px rgba(247,37,133,0.8);
+}
+
+#statsButton{
+  margin-top:20px;
+  padding:15px 30px;
+  font-size:1.5em;
+  font-weight:800;
+  border-radius:20px;
+  border:none;
+  cursor:pointer;
+  background:linear-gradient(135deg,#00b4d8,#f72585);
+  color:white;
+  box-shadow:0 0 30px rgba(0,180,216,0.5);
+}
+
+.footer{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  padding:25px;
+  text-align:center;
+}
+.footer-text{
+  font-size:1.5em;
+  background:linear-gradient(135deg,var(--white),var(--purple-bright),var(--pink-neon));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+</style>
+</head>
+
+<body>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="container">
+  <div class="header">
+    <h1>⚡ AURABABY CPS DASHBOARD ⚡</h1>
+  </div>
+
+  <div id="rewardTop">Reach 12+ CPS</div>
+
+  <div class="timer-buttons">
+    <button onclick="setTimer(1)">1s</button>
+    <button onclick="setTimer(3)">3s</button>
+    <button onclick="setTimer(5)">5s</button>
+    <button onclick="setTimer(10)">10s</button>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="card-title">🖱 CPS Meter</div>
+      <div class="cps-bar">
+        <div class="cps-fill" id="cpsFill"></div>
+      </div>
+      <div class="big" id="cps">0.00</div>
+    </div>
+
+    <div id="clickBox">CLICK HERE FAST!</div>
+
+    <div class="card">
+      <div class="card-title">⏱ Time Left</div>
+      <div class="big" id="time">5</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📊 Stats</div>
+      <div>Clicks: <span id="clicks">0</span></div>
+      <div>Animal: <span id="animal">🐢</span></div>
+    </div>
+  </div>
+
+  <!-- BOTTOM REWARD BUTTON -->
+  <div id="rewardButtonContainer">
+    <button id="rewardButton">🎉 Used this code on the Level System!</button><br>
+    <button id="statsButton">See Average CPS Per Second</button>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">aurababy</div>
+</div>
+
+<script>
+let clicks=0, time=5, active=false, startTime, selectedTime=5, cpsHistory=[];
+
+function setTimer(seconds){
+  selectedTime = seconds;
+  document.getElementById("time").textContent = seconds;
+  document.getElementById("rewardTop").textContent = "Reach 12+ CPS";
+  document.getElementById("rewardButtonContainer").style.display = "none";
+  cpsHistory=[];
+}
+
+function start(){
+  clicks=0;
+  cpsHistory=[];
+  time=selectedTime;
+  active=true;
+  startTime=Date.now();
+  updateStatsDisplay();
+  countdown();
+}
+
+function countdown(){
+  const t = setInterval(()=>{
+    time--;
+    document.getElementById("time").textContent = time;
+    if(time<=0){
+      clearInterval(t);
+      end();
+    }
+  },1000);
+}
+
+const clickBox = document.getElementById("clickBox");
+clickBox.onclick = () => {
+  if(!active){ start(); return; }
+  clicks++;
+  const cps = (clicks / ((Date.now() - startTime)/1000)).toFixed(2);
+  cpsHistory.push(cps);
+  updateStatsDisplay();
+};
+
+function updateStatsDisplay(){
+  const cps = (clicks / ((Date.now()-startTime)/1000)).toFixed(2);
+  document.getElementById("clicks").textContent = clicks;
+  document.getElementById("cps").textContent = cps;
+  document.getElementById("cpsFill").style.width = Math.min(cps*8,100) + "%";
+  document.getElementById("animal").textContent =
+    cps >= 12 ? "🐆" : cps >= 8 ? "🐾" : cps >= 5 ? "🦊" : cps >= 2 ? "🐇" : "🐢";
+}
+
+function end(){
+  active = false;
+  const cps = (clicks/selectedTime).toFixed(2);
+  if(cps>=12){
+    document.getElementById("rewardTop").textContent = "🎉 12+ CPS Reached!";
+    document.getElementById("rewardButtonContainer").style.display = "block";
+  } else {
+    document.getElementById("rewardTop").textContent = "Time's Up! Retry!";
+    document.getElementById("rewardButtonContainer").style.display = "none";
+  }
+}
+
+document.getElementById("rewardButton").onclick = () => {
+  alert("🎉 Congratulations! Use code: wowveryfastclickerbaby2222 on the Level System.");
+};
+
+document.getElementById("statsButton").onclick = () => {
+  if(cpsHistory.length === 0){
+    alert("No CPS data yet!");
+    return;
+  }
+  const total = cpsHistory.reduce((a,b)=>parseFloat(a)+parseFloat(b),0);
+  const avg = (total/cpsHistory.length).toFixed(2);
+  alert("Average CPS per second: " + avg);
+};
+</script>
+</body>
+</html>
