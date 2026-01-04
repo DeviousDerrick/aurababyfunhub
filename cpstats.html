@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aurababy CPS Stats</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&display=swap" rel="stylesheet">
 
+<style>
+:root {
+  --purple-deep:#1a0d2e;
+  --purple-bright:#7b2cbf;
+  --blue-bright:#00b4d8;
+  --pink-neon:#f72585;
+  --gold:#ffd700;
+  --white:#ffffff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:Poppins,sans-serif;
+  font-weight:800;
+  background:linear-gradient(125deg,#1a0d2e,#2d1b4e,#3e1f5c,#2d1b4e,#1a0d2e);
+  background-size:400% 400%;
+  animation:gradientFlow 20s ease infinite;
+  color:var(--white);
+  min-height:100vh;
+  padding:40px 20px;
+}
+
+@keyframes gradientFlow{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  border-radius:25px;
+  padding:30px;
+  box-shadow:0 10px 50px rgba(0,0,0,0.5);
+}
+
+h1{text-align:center;margin-bottom:30px;font-size:2.5em;background:linear-gradient(135deg,var(--white),var(--blue-bright),var(--pink-neon));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.stats-box{
+  background:rgba(0,0,0,0.3);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+  text-align:center;
+  font-size:1.2em;
+  box-shadow:0 0 30px rgba(255,255,255,0.2);
+}
+
+.reward-box{
+  background:linear-gradient(135deg,var(--purple-bright),var(--pink-neon));
+  border-radius:20px;
+  padding:25px;
+  text-align:center;
+  font-size:1.5em;
+  font-weight:900;
+  margin:30px 0;
+  color:var(--white);
+  box-shadow:0 0 50px rgba(255,255,255,0.5);
+}
+
+.button{
+  display:block;
+  width:100%;
+  padding:15px;
+  margin-top:15px;
+  font-size:1.2em;
+  font-weight:900;
+  border:none;
+  border-radius:25px;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--blue-bright),var(--gold));
+  color:var(--white);
+  transition:.3s;
+}
+
+.button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(255,255,255,0.5);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>⚡ CPS STATS ⚡</h1>
+
+<div class="reward-box" id="rewardBox">Reach 12+ CPS to get code!</div>
+
+<div class="stats-box">Total Clicks: <span id="totalClicks">0</span></div>
+<div class="stats-box">Time Selected: <span id="timeUsed">0</span> seconds</div>
+<div class="stats-box">Average CPS: <span id="avgCPS">0</span></div>
+<div class="stats-box">Highest CPS: <span id="highCPS">0</span></div>
+<div class="stats-box">Animal: <span id="animal">🐢</span></div>
+
+<button class="button" onclick="clearStats()">Clear Stats</button>
+</div>
+
+<script>
+// get stats from localStorage
+let stats = JSON.parse(localStorage.getItem("cpsStats")) || [];
+
+function updateStats() {
+  if(stats.length === 0){
+    document.getElementById("totalClicks").textContent = 0;
+    document.getElementById("timeUsed").textContent = 0;
+    document.getElementById("avgCPS").textContent = 0;
+    document.getElementById("highCPS").textContent = 0;
+    document.getElementById("animal").textContent = "🐢";
+    document.getElementById("rewardBox").textContent = "Reach 12+ CPS to get code!";
+    return;
+  }
+
+  let last = stats[stats.length-1];
+  document.getElementById("totalClicks").textContent = last.clicks;
+  document.getElementById("timeUsed").textContent = last.time;
+  document.getElementById("avgCPS").textContent = (last.clicks/last.time).toFixed(2);
+  document.getElementById("highCPS").textContent = Math.max(...stats.map(s=>s.cps)).toFixed(2);
+  document.getElementById("animal").textContent = last.cps>=12?"🐆":last.cps>=8?"🐾":last.cps>=5?"🦊":last.cps>=2?"🐇":"🐢";
+
+  if(last.cps>=12){
+    document.getElementById("rewardBox").textContent = "🎉 Used Code: wowveryfastclickerbaby2222";
+  }else{
+    document.getElementById("rewardBox").textContent = "Try again! Reach 12+ CPS";
+  }
+}
+
+// clear stats
+function clearStats(){
+  localStorage.removeItem("cpsStats");
+  stats = [];
+  updateStats();
+}
+
+// call update on load
+updateStats();
+
+</script>
+</body>
+</html>
