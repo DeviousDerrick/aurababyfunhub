@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Aurababy Fun Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&display=swap" rel="stylesheet">
 
+<style>
+:root {
+  --purple-deep: #1a0d2e;
+  --purple-bright: #7b2cbf;
+  --blue-bright: #00b4d8;
+  --pink-neon: #f72585;
+  --white: #ffffff;
+}
+
+body{
+  margin:0;
+  font-family:"Poppins", sans-serif;
+  font-weight:800;
+  min-height:100vh;
+  background: linear-gradient(125deg, #1a0d2e 0%, #2d1b4e 25%, #3e1f5c 50%, #2d1b4e 75%, #1a0d2e 100%);
+  background-size:400% 400%;
+  animation: gradientFlow 20s ease infinite;
+  color: var(--white);
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:40px;
+  gap:2%;
+}
+
+@keyframes gradientFlow {
+  0%,100%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+}
+
+h1{
+  text-align:center;
+  font-size:3em;
+  background:linear-gradient(135deg,var(--white),var(--blue-bright),var(--pink-neon));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:40px;
+}
+
+/* HUB LAYOUT */
+.side-box{
+  width:35%;
+  background: rgba(255,255,255,0.05);
+  border:3px solid rgba(255,255,255,0.2);
+  border-radius:30px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  box-shadow:0 0 30px rgba(255,255,255,0.2);
+  transition: all 0.4s ease;
+}
+
+.side-box:hover{
+  transform: scale(1.02);
+  box-shadow:0 20px 60px rgba(123,44,191,0.6);
+}
+
+/* CENTER TEXT AREA */
+.center-content{
+  flex:1;
+  background: rgba(255,255,255,0.05);
+  border-radius:20px;
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:20px;
+  text-align:center;
+  font-size:1.2em;
+  line-height:1.5em;
+  box-shadow:0 0 30px rgba(255,255,255,0.2);
+}
+
+/* BUTTONS */
+.button{
+  display:block;
+  width:90%;
+  padding:20px;
+  font-size:1.5em;
+  font-weight:800;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--purple-bright),var(--pink-neon));
+  color:white;
+  text-align:center;
+  text-decoration:none;
+  transition:.3s;
+}
+
+.button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 40px rgba(255,255,255,0.6);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 1000px){
+  body{
+    flex-direction:column;
+    align-items:center;
+    padding-top:20px;
+  }
+  .side-box, .center-content{
+    width:90%;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- LEFT BOX -->
+<div class="side-box">
+  <h2>⚡ CPS Clicker</h2>
+  <p>Click as fast as you can! Track your CPS and unlock rewards. This game helps you improve your speed and reaction!</p>
+  <a href="cps.html" class="button">Play CPS</a>
+</div>
+
+<!-- CENTER TEXT AREA --> <div class="center-content"> <h2>Welcome to Aurababy Fun Hub!</h2> <p>Here you can play different Aurababy games, check your stats, and have fun with challenges. Select a game from the boxes on the left or right to start playing. Your performance and scores will be saved so you can see your progress!</p> <!-- Fattie Baby Image --> <img src="https://i.ibb.co/FkyMMCRv/fattiebaby.jpg" alt="Fattie Baby" style=" width:100%; max-width:500px; border-radius:20px; margin-top:20px; box-shadow:0 0 30px rgba(255,255,255,0.2); transition:transform 0.3s ease; " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"> </div>
+
+<!-- RIGHT BOX -->
+<div class="side-box">
+  <h2>⏱ Reaction Test</h2>
+  <p>Test your reflexes! Click the screen as soon as the box changes color. Track your average reaction time and compete for the best results!</p>
+  <a href="reaction.html" class="button">Play Reaction</a>
+</div>
+
+</body>
+</html>
